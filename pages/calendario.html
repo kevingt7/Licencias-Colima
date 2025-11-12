@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Citas</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <script>
+        function guardarFechaCita() {
+            const fechaCita = document.getElementById('fecha-cita').value;
+            const horaCita = document.getElementById('hora-cita').value;
+
+            // Generar un número de comprobante único
+            const numeroComprobante = 'CITA-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+
+            localStorage.setItem('fechaCita', fechaCita);
+            localStorage.setItem('horaCita', horaCita);
+            localStorage.setItem('numeroComprobante', numeroComprobante);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-4">Selecciona una Fecha para tu Cita</h1>
+        <form action="comprobante.html" method="get" onsubmit="guardarFechaCita()" class="space-y-4">
+            <div>
+                <label for="fecha-cita" class="block font-medium mb-1">Elige un día disponible:</label>
+                <input type="date" id="fecha-cita" name="fecha-cita" required class="border rounded px-3 py-2 w-full">
+            </div>
+            <div>
+                <label for="hora-cita" class="block font-medium mb-1">Elige una hora disponible:</label>
+                <input type="time" id="hora-cita" name="hora-cita" required min="09:00" max="14:00" step="1800" class="border rounded px-3 py-2 w-full">
+            </div>
+            <button type="submit" class="btn">Confirmar Cita</button>
+        </form>
+    </div>
+</body>
+</html>

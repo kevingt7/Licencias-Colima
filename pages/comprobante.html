@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante de Cita</title>
+    <link rel="stylesheet" href="/../css/styles.css">
+    <script>
+        function mostrarComprobante() {
+            const nombre = localStorage.getItem('nombre');
+            const email = localStorage.getItem('email');
+            const telefono = localStorage.getItem('telefono');
+            const fechaCita = localStorage.getItem('fechaCita');
+            const horaCita = localStorage.getItem('horaCita');
+            const numeroComprobante = localStorage.getItem('numeroComprobante');
+
+            document.getElementById('nombre').textContent = nombre;
+            document.getElementById('email').textContent = email;
+            document.getElementById('telefono').textContent = telefono;
+            document.getElementById('fecha-cita').textContent = `${fechaCita} a las ${horaCita}`;
+            document.getElementById('numero-comprobante').textContent = numeroComprobante;
+        }
+
+        function modificarCita() {
+            const nuevaFecha = prompt("Ingrese la nueva fecha de la cita (YYYY-MM-DD):", localStorage.getItem('fechaCita'));
+            const nuevaHora = prompt("Ingrese la nueva hora de la cita (HH:MM):", localStorage.getItem('horaCita'));
+
+            if (nuevaFecha && nuevaHora) {
+                localStorage.setItem('fechaCita', nuevaFecha);
+                localStorage.setItem('horaCita', nuevaHora);
+                alert("La cita ha sido modificada.");
+                mostrarComprobante();
+            } else {
+                alert("Modificación cancelada.");
+            }
+        }
+
+        function cancelarCita() {
+            if (confirm("¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.")) {
+                localStorage.removeItem('nombre');
+                localStorage.removeItem('email');
+                localStorage.removeItem('telefono');
+                localStorage.removeItem('fechaCita');
+                localStorage.removeItem('horaCita');
+                localStorage.removeItem('numeroComprobante');
+                alert("La cita ha sido cancelada.");
+                window.location.href = "index.html"; // Redirect to homepage
+            }
+        }
+    </script>
+</head>
+<body onload="mostrarComprobante()">
+    <div class="container">
+        <h1>Comprobante de Cita</h1>
+        <p>Gracias por agendar tu cita. Aquí está tu comprobante:</p>
+        <div class="comprobante">
+            <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+            <p><strong>Correo Electrónico:</strong> <span id="email"></span></p>
+            <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+            <p><strong>Fecha de Cita:</strong> <span id="fecha-cita"></span></p>
+            <p><strong>Número de Comprobante:</strong> <span id="numero-comprobante"></span></p>
+        </div>
+        <button onclick="window.print()" class="btn">Imprimir Comprobante</button>
+        <button onclick="modificarCita()" class="btn">Modificar Cita</button>
+        <button onclick="cancelarCita()" class="btn">Cancelar Cita</button>
+        <a href="index.html" class="btn">Ir al inicio</a>
+    </div>
+</body>
+</html>
